@@ -1,11 +1,16 @@
-package com.example.alarmemeian
+package com.meetsu.alarmemeian
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.provider.Telephony
 import android.telephony.SmsManager
+import android.telephony.SmsMessage
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+
 
 class SMSController(private val context: Context) {
 
@@ -13,6 +18,7 @@ class SMSController(private val context: Context) {
     private var code: String = ""
     private var messageprefix: String = "#ORION"
     private val view: View = (context as AppCompatActivity).findViewById<View>(android.R.id.content)
+
 
     // Save alarm settings on the phone
     fun saveAlarm(phoneNumber: String, code: String) {
@@ -52,28 +58,61 @@ class SMSController(private val context: Context) {
 
     // Function to send SMS and all the checks before to ensure all the conditions are met
     fun sendSMS(action: String): Boolean {
+
         // Check if the alarm is configured
         if (!alarmConfigured()) {
             noAlarmError()
             return false
         }
 
-        // Check privileges for sending SMS, if not granted, popup a permission request
-        if (context.checkSelfPermission(android.Manifest.permission.SEND_SMS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            (context as AppCompatActivity).requestPermissions(arrayOf(android.Manifest.permission.SEND_SMS), 1)
-            return false
-        }
-
-        // Send the SMS
+        // Send the SMS with the code and the action to the alarm
         val smsManager = context.getSystemService(SmsManager::class.java)
-
-        // Sending the SMS
         smsManager.sendTextMessage(phoneNumber, null, "$messageprefix$code #$action", null, null)
 
+        // Confirmation to the user
         Snackbar.make(view, context.getString(R.string.sms_sent), Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
+
+        // Start the SMS receiver to track the incoming SMS
+        registerSmsReceiver()
+
         return true
     }
 
+    // SMS receiver to track the incoming SMS
+    private val smsReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            intent?.let {
+                if (it.action == "android.provider.Telephony.SMS_RECEIVED") {
+                    val smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
+                    processSms(smsMessages.toList())
+                }
+            }
+        }
 
+        // Process the SMS received and sends it as a snackbar
+        private fun processSms(messages: List<SmsMessage>) {
+            for (message in messages) {
+
+                // Replace "certain_numero" with the desired phone number
+                if (message.originatingAddress == phoneNumber) {
+                    Snackbar.make(view, "Réponse de l'alarme : ${message.messageBody}", Snackbar.LENGTH_LONG).show()
+                    // Unregister the SMS tracker after receiving the SMS
+                    unregisterSmsReceiver()
+                }
+            }
+        }
+    }
+
+    // Starts the SMS receiver to track for the next incoming SMS from the alarm
+    private fun registerSmsReceiver() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED")
+        context.registerReceiver(smsReceiver, intentFilter)
+    }
+
+    // Stops the SMS receiver
+    fun unregisterSmsReceiver() {
+        context.unregisterReceiver(smsReceiver)
+    }
 }
