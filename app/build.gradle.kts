@@ -4,15 +4,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.alarmemeian"
+    namespace = "com.meetsu.alarmemeian"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.alarmemeian"
+        applicationId = "com.meetsu.alarmemeian"
         minSdk = 27
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,6 +32,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 

@@ -22,6 +22,9 @@
     <string name="settings_saved">Paramètres enregistrés. Appuyez sur statut pour vérifier si l\'alarme répond.</string>
     <string name="cancel">Annuler</string>
     <string name="no_alarm">Aucune alarme configurée, allez dans les paramètres pour l\'ajouter</string>
-    <string name="sms_sent">SMS envoyé</string>
+    <string name="sms_sent">SMS envoyé, en attente de la réponse de l\'alarme</string>
+    <string name="by_author">by meetsu</string>
+    <string name="version_text">Version :</string>
+    <string name="ok">OK</string>
 
 </resources>
