@@ -3,17 +3,26 @@ package com.example.alarmemeian
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import com.example.alarmemeian.databinding.ActivityMainBinding
-import com.example.alarmemeian.SMSController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 
-// TODO 1: Add Settings Popup
-// TODO 2: Add all the buttons
+// TODO 1 : Vérifier que ça marche sur toutes tailles de tel
+// TODO 2 : Day / Night mode implémentation (retirer celui auto ou l'adapter pour l'appli)
+// TODO 2.1 : Fix les couleurs des boutons pour qu'ils soient pas bizarres en night mode
+// TODO 3 : Faire partie à propos qui va chercher la version de l'appli
+// TODO 4 : Renommez le package de l'appli et faire un icone (préparer l'appli pour apk en soit)
+// EN COURS TODO 5 : Faire système d'attente de sms de la part de l'alarme
+// TODO 5.1 : Mettre un gif de chargement sur l'action selectionnée le temps que le sms de
+//            l'alarme arrive et bloquer les autres envois de sms
+// TODO 6 : Faire un mini-readme
+// TODO 7 : Repasser vite fait sur tout le code pour le commenter
 
-class MainActivity : AppCompatActivity() {
+class MainActivity  : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var smsController: SMSController
@@ -22,54 +31,63 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-
-
 
         smsController = SMSController(this)
         smsController.loadAlarm()
-
-        binding.ARMER.setOnClickListener {
-            confirmationPopup("ARMER")
-        }
-        binding.DESARMER.setOnClickListener {
-            confirmationPopup("DESARMER")
-        }
-        binding.ARMERPARTIEL.setOnClickListener {
-            confirmationPopup("ARMERPARTIEL")
-        }
-
+        allSetOnClickListener(binding.root)
     }
 
+    private fun allSetOnClickListener (view: View) {
+        binding.alarmOn.setOnClickListener {
+            confirmationPopup("ARMER", getString(R.string.alarm_on_confirmation), view = binding.root)
+        }
+        binding.alarmSensor.setOnClickListener {
+            confirmationPopup("DESARMER", getString(R.string.alarm_sensor_confirmation), view = binding.root)
+        }
+        binding.alarmOff.setOnClickListener {
+            confirmationPopup("ARMERPARTIEL", getString(R.string.alarm_off_confirmation), view = binding.root)
+        }
+        binding.alarmStatus.setOnClickListener {
+            smsController.sendSMS("STATUT")
+        }
+        binding.appInfo.setOnClickListener {
+            return@setOnClickListener
+        }
+        binding.appSettings.setOnClickListener {
+            showSettingsDialog(view)
+        }
+    }
     // Confirmation popup for any buttons related to sending SMS
-    private fun confirmationPopup(action: String) {
+    private fun confirmationPopup(action: String, actionText : String, view: View) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Confirmation")
-        builder.setMessage(getString(R.string.sms_send_confirmation))
-        builder.setPositiveButton("Oui", DialogInterface.OnClickListener { _, _ ->
+               .setMessage(actionText)
+               .setPositiveButton(getString(R.string.oui), DialogInterface.OnClickListener { _, _ ->
             smsController.sendSMS(action)
-            Snackbar.make(view, "SMS envoyé", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        })
+            })
+               .setNegativeButton(getString(R.string.non), DialogInterface.OnClickListener { _, _ -> })
+               .show()
     }
 
+    private fun showSettingsDialog(view: View) {
+        val dialogView: View = LayoutInflater.from(this).inflate(R.layout.settings_layout, null)
+        val phoneNumber = dialogView.findViewById<EditText>(R.id.phoneNumber)
+        val code = dialogView.findViewById<EditText>(R.id.code)
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.settings_alarm))
+            .setView(dialogView)
+            .setPositiveButton(getString(R.string.save)) { dialog: DialogInterface, _: Int ->
+                smsController.saveAlarm(phoneNumber.text.toString(), code.text.toString())
+                dialog.dismiss()
+                Snackbar.make(view, getString(R.string.settings_saved), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+            .setNegativeButton(
+                getString(R.string.cancel)
+            ) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
+            .show()
+
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
 }

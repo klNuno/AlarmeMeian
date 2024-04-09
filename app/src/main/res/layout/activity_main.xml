@@ -7,28 +7,199 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
+
+    <!-- Les 6 boutons contenus dans un LinearLayout vertical
+         pour les 2 colonnes puis un LinearLayout horizontal
+         pour chacune des 2 lignes afin qu'on ait 3 boutons
+         par ligne.
+
+         Pour chaque bouton, on a un LinearLayout vertical
+         pour afficher le bouton et en dessous son nom.-->
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:text="@string/app_name"
+        android:textSize="24sp"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="16dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/ARMER"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            android:layout_gravity="top"
+            android:orientation="horizontal">
+
+            <!-- Bouton pour activer l'alarme -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/alarm_on"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="16dp"
+                    android:scaleType="center"
+                    app:fabCustomSize="100dp"
+                    app:maxImageSize="84dp"
+                    android:src="@drawable/alarm_on"
+                    app:backgroundTint="@color/light_red"
+                    app:tint="@color/dark_red"
+                    android:contentDescription="@string/alarm_on" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/alarm_on"
+                    android:maxWidth="100dp"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <!-- Bouton pour activer l'alarme partiellement -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/alarm_sensor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:scaleType="fitCenter"
+                    app:fabCustomSize="100dp"
+                    app:maxImageSize="84dp"
+                    android:src="@drawable/alarm_sensor"
+                    app:backgroundTint="@color/light_orange"
+                    app:tint="@color/dark_orange"
+                    android:contentDescription="@string/alarm_sensor" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/alarm_sensor"
+                    android:maxWidth="100dp"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <!-- Bouton pour désactiver l'alarme -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/alarm_off"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:scaleType="fitCenter"
+                    app:fabCustomSize="100dp"
+                    app:maxImageSize="84dp"
+                    android:src="@drawable/alarm_off"
+                    app:backgroundTint="@color/light_green"
+                    app:tint="@color/dark_green"
+                    android:contentDescription="@string/alarm_off" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/alarm_off"
+                    android:maxWidth="100dp"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:orientation="horizontal">
+
+            <!-- Bouton pour afficher le statut de l'alarme -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/alarm_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:scaleType="fitCenter"
+                    app:fabCustomSize="100dp"
+                    app:maxImageSize="84dp"
+                    android:src="@drawable/info"
+                    app:backgroundTint="@color/light_blue"
+                    app:tint="@color/dark_blue"
+                    android:contentDescription="@string/alarm_status" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/alarm_status"
+                    android:maxWidth="100dp"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Bouton pour afficher les informations de l'application -->
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/app_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:scaleType="fitCenter"
+                    app:fabCustomSize="100dp"
+                    app:maxImageSize="84dp"
+                    android:src="@drawable/help"
+                    app:backgroundTint="@color/light_purple"
+                    app:tint="@color/dark_purple"
+                    android:contentDescription="@string/app_info" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/app_info"
+                    android:maxWidth="100dp"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <!-- Bouton pour afficher les paramètres de l'application -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/app_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:scaleType="fitCenter"
+                    app:fabCustomSize="100dp"
+                    app:maxImageSize="84dp"
+                    android:src="@drawable/settings"
+                    app:backgroundTint="@color/light_grey"
+                    app:tint="@color/dark_grey"
+                    android:contentDescription="@string/settings_alarm" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/settings_alarm"
+                    android:maxWidth="100dp"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

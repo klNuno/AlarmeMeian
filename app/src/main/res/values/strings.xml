@@ -1,6 +1,27 @@
 <resources>
     <string name="app_name">Alarme Meian</string>
-    <string name="action_settings">Settings</string>
-    <string name="sms_send_confirmation">Voulez-vous vraiment envoyer un SMS ?</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="alarm_on_confirmation">Voulez-vous vraiment armer l\'alarme ?</string>
+    <string name="alarm_off_confirmation">Voulez-vous vraiment désarmer l\'alarme ?</string>
+    <string name="alarm_sensor_confirmation">Voulez-vous vraiment armer partiellement l\'alarme ?</string>
+    <string name="alarm_on">Armer</string>
+    <string name="alarm_off">Désarmer</string>
+    <string name="alarm_sensor">Armer partiellement</string>
+    <string name="alarm_status">Statut de l\'alarme</string>
+    <string name="app_info">À propos</string>
+    <string name="settings_alarm">Configurer l\'alarme</string>
+
+    <string name="oui">Oui</string>
+    <string name="non">Non</string>
+    <string name="example_number">+33 6 12 34 56 78</string>
+    <string name="settings_numtel">Numéro de téléphone de votre alarme :</string>
+    <string name="settings_code">Code PIN de l\'alarme :</string>
+    <string name="save">Sauvegarder</string>
+    <string name="example_code">1234</string>
+
+    <string name="settings_saved">Paramètres enregistrés. Appuyez sur statut pour vérifier si l\'alarme répond.</string>
+    <string name="cancel">Annuler</string>
+    <string name="no_alarm">Aucune alarme configurée, allez dans les paramètres pour l\'ajouter</string>
+    <string name="sms_sent">SMS envoyé</string>
 
 </resources>
