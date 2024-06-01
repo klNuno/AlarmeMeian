@@ -49,6 +49,7 @@
                     app:backgroundTint="@color/light_red"
                     app:tint="@color/dark_red"
                     android:contentDescription="@string/alarm_on" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -17,16 +17,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
 
-// TODO 1 : Vérifier que ça marche sur toutes tailles de tel/
+// TODO NOW 1 : Vérifier que ça marche sur toutes tailles de tel
 // TODO 2 : Day / Night mode implémentation (retirer celui auto ou l'adapter pour l'appli)
 // TODO 2.1 : Fix les couleurs des boutons pour qu'ils soient pas bizarres en night mode
-// TODO 3 : Faire partie à propos qui va chercher la version de l'appli
 // TODO NOW 4 : Renommez le package de l'appli et faire un icone (préparer l'appli pour apk en soit)
 // TODO DONE 5 : Faire système d'attente de sms de la part de l'alarme
 // TODO 5.1 : Mettre un gif de chargement sur l'action selectionnée le temps que le sms de
 //            l'alarme arrive et bloquer les autres envois de sms
 // TODO 6 : Faire un mini-readme
-// TODO 7 : Repasser vite fait sur tout le code pour le commenter
 // TODO DONE 8 : Remettre le num de tel et le code quand on en a déjà mit un dans les paramètres
 
 class MainActivity  : AppCompatActivity() {
