@@ -49,8 +49,8 @@ class MainActivity  : AppCompatActivity() {
     private fun allSetOnClickListener(view: View) {
         val buttonActions = mapOf(
             binding.alarmOn to { confirmationPopup("ARMER", getString(R.string.alarm_on_confirmation)) },
-            binding.alarmSensor to { confirmationPopup("DESARMER", getString(R.string.alarm_sensor_confirmation)) },
-            binding.alarmOff to { confirmationPopup("ARMERPARTIEL", getString(R.string.alarm_off_confirmation)) },
+            binding.alarmSensor to { confirmationPopup("ARMERPARTIEL", getString(R.string.alarm_sensor_confirmation)) },
+            binding.alarmOff to { confirmationPopup("DESARMER", getString(R.string.alarm_off_confirmation)) },
             binding.alarmStatus to { smsController.sendSMS("STATUT") },
             binding.appInfo to { showInfoDialog() },
             binding.appSettings to { showSettingsDialog(view) }
