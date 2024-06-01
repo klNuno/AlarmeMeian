@@ -115,4 +115,14 @@ class SMSController(private val context: Context) {
     fun unregisterSmsReceiver() {
         context.unregisterReceiver(smsReceiver)
     }
+
+    // Get the phone number of the alarm
+    fun getPhoneNumber(): String {
+        return phoneNumber
+    }
+
+    // Get the PIN code of the alarm
+    fun getCode(): String {
+        return code
+    }
 }
