@@ -17,7 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
 
-// TODO 1 : Vérifier que ça marche sur toutes tailles de tel
+// TODO 1 : Vérifier que ça marche sur toutes tailles de tel/
 // TODO 2 : Day / Night mode implémentation (retirer celui auto ou l'adapter pour l'appli)
 // TODO 2.1 : Fix les couleurs des boutons pour qu'ils soient pas bizarres en night mode
 // TODO 3 : Faire partie à propos qui va chercher la version de l'appli
@@ -27,7 +27,7 @@ import com.google.android.material.snackbar.Snackbar
 //            l'alarme arrive et bloquer les autres envois de sms
 // TODO 6 : Faire un mini-readme
 // TODO 7 : Repasser vite fait sur tout le code pour le commenter
-// TODO 8 : Remettre le num de tel et le code quand on en a déjà mit un dans les paramètres
+// TODO DONE 8 : Remettre le num de tel et le code quand on en a déjà mit un dans les paramètres
 
 class MainActivity  : AppCompatActivity() {
 
@@ -76,8 +76,12 @@ class MainActivity  : AppCompatActivity() {
 
     private fun showSettingsDialog(view: View) {
         val dialogView: View = LayoutInflater.from(this).inflate(R.layout.settings_layout, null)
+
+        // Set the phone number and code in the dialog if they are already set
         val phoneNumber = dialogView.findViewById<EditText>(R.id.phoneNumber)
         val code = dialogView.findViewById<EditText>(R.id.code)
+        phoneNumber.setText(smsController.getPhoneNumber())
+        code.setText(smsController.getCode())
 
         MaterialAlertDialogBuilder(this)
             .setTitle(getString(R.string.settings_alarm))
